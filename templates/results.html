@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polisens Läkemedelsstöd - Resultat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Resultat</h1>
+    <h2>{{ search_term.capitalize() }}</h2>
+    <div class="container">
+        <table>
+            <tr>
+              <th>Läkemedel</th>
+              <th>Klassificering</th> 
+            </tr>
+            <tr>
+              <td>
+                <ul style="list-style-type:none; padding: 0; margin: 0">
+                    {% if match == True %}
+                        {% for suggestion in suggestions %}
+                            <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    {% else %}
+                        {{ search_term.capitalize() }}
+                    {% endif %}
+                </ul>
+              </td>
+              <td rowspan="2" style="vertical-align:top; height:{{ suggestions_height }}px">
+                {% if match == True %}
+                  Narkotika
+                {% else %}
+                  Ej Narkotika
+                {% endif %}
+              </td> 
+            </tr>
+            <tr>
+              <td style="height:{{ suggestions_height }}px"></td>
+            </tr>
+          </table>          
+    </div>            
+    <div>
+        <form action="{{ url_for('search') }}" method="post">
+            <input type="text" name="search_term" placeholder="Sök läkemedel">
+            <input type="submit" class="submit-button-1" value="Sök">
+        </form>
+    </div>
+</body>
+<footer>
+    <p><a href="{{ url_for('index') }}">Sök</a><a href="{{ url_for('usage') }}">Användning</a> <a href="{{ url_for('about') }}">Om programmet</a> <a href="{{ url_for('mediciner') }}">Läkemedelslista</a> <a href="{{ url_for('contact') }}">Kontakt/Feedback</a></p>
+    <p>Copyright &copy; 2023. Alla rättigheter förbehålls. Version 1.0.1</p>
+</footer>
+</html>
